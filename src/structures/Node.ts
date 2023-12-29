@@ -185,21 +185,21 @@ export class Node {
      */
     public async makeRequest<T>(endpoint: string, modify?: ModifyRequest): Promise<T> {
         const options: Dispatcher.RequestOptions = {
-            path: `/${endpoint.replace(/^\//, "")}`,
-            method: "GET",
-            headers: {
-                Authorization: this.options.password,
-            },
-            headersTimeout: this.options.requestTimeout,
+          path: `/${endpoint.replace(/^\//gm, "")}`,
+          method: "GET",
+          headers: {
+            Authorization: this.options.password
+          },
+          headersTimeout: this.options.requestTimeout,
         }
-
+      
         modify?.(options);
-
+      
         const request = await this.http.request(options);
         this.calls++;
-
-        return await request.body.json();
-    }
+      
+        return await request.body.json() as T;
+      }
 
     /**
      * Sends data to the Node.

@@ -281,7 +281,7 @@ export class Player {
         const options = {
             op: "play",
             guildId: this.guild,
-            track: this.queue.current.track,
+            track: this.queue.current?.track ?? null,
             ...finalOptions,
         };
 
